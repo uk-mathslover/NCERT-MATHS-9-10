@@ -428,7 +428,26 @@ transition:.2s
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .admin-btn-row{display:flex;gap:10px;justify-content:center}
 .admin-hint{font-size:11px;color:var(--muted);margin-top:14px;opacity:.7}
-#nav-admin{display:none !important}
+/* PREMIUM ADMIN BUTTON */
+
+.premium-admin-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff !important;
+padding:10px 16px !important;
+border-radius:14px;
+font-weight:900;
+box-shadow:0 8px 20px rgba(255,152,0,.35);
+transition:.25s;
+border:1px solid rgba(255,255,255,.15);
+display:inline-flex !important;
+align-items:center;
+justify-content:center;
+}
+
+.premium-admin-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 28px rgba(255,152,0,.45);
+}
 </style>
 </head>
 <body data-theme="light">
@@ -473,7 +492,9 @@ transition:.2s
       <a href="#" onclick="showPage('leaderboard')" id="nav-leaderboard">रैंक</a>
       <a href="#" onclick="showPage('samplepaper')" id="nav-samplepaper">पेपर</a>
       <a href="#" onclick="showPage('homework')" id="nav-homework">होमवर्क</a>
-      <a href="#" onclick="openAdminLock()" id="nav-admin">एडमिन</a>
+      <a href="#" onclick="openAdminLock()" id="nav-admin" class="premium-admin-btn">
+🔐 Admin
+</a>
 </a>
     </div>
   </div>
