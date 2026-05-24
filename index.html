@@ -1178,19 +1178,24 @@ function renderHomeHW(){
 const e=document.getElementById('homeHW');if(!e)return;
 const d=storage.homework.slice().sort((a,b)=>b.id-a.id).slice(0,4);
 e.innerHTML=d.length?`<div class="table-wrap"><table class="table"><thead><tr><th>तिथि</th><th>कक्षा</th><th>अध्याय</th><th>टास्क</th><th>लिंक</th></tr></thead><tbody>${
-d.map(h=>`<tr><td>${h.date}</td><td>${h.class}</td><td>${h.chapter}</td><td>${h.task}</td><td>
+d.map(h=>`<tr><td>${h.date}</td><td>${h.class}</td><td>${h.chapter}</td><td>${h.task}</td>
+<td>
+
 ${h.link ? `
-<a href="${h.link}" target="_blank" class="href-link">📄 Drive</a>
-
+<a href="${h.link}" target="_blank" class="btn btn-primary btn-sm">
+📘 Drive
+</a>
 <br><br>
+` : ''}
 
-<iframe
-src="${h.link.replace('/view?usp=drive_link','/preview')}"
-width="220"
-height="260"
-style="border:none;border-radius:12px;">
-</iframe>
-` : '-'}
+${h.files && h.files.length ? h.files.map(file=>`
+
+<a href="${file}" target="_blank" class="btn btn-saffron btn-sm">
+📄 PDF खोलें
+</a>
+
+`).join('<br><br>') : '-'}
+
 </td></tr>`).join('')
 }</tbody></table></div>`:'<div class="empty"><div class="ico">📝</div><p>अभी कोई homework नहीं है</p></div>';
 updateStats()
@@ -1202,13 +1207,14 @@ e.innerHTML=storage.ann.length?storage.ann.map(x=>`<div class="announcement"><di
 }
 
 function addHomework(){
+const files = document.getElementById('hwFiles').files;
 const date=document.getElementById('hwDate').value,cls=document.getElementById('hwClass').value,chapter=document.getElementById('hwChapter').value.trim(),task=document.getElementById('hwTask').value.trim(),link=document.getElementById('hwLink').value.trim();
 const files=[...document.getElementById('hwFiles').files||[]];
 if(!date||!chapter||!task){toast('सभी fields भरें');return}
 Promise.all(files.map(file=>new Promise(res=>{
 const r=new FileReader();r.onload=()=>res({name:file.name,type:file.type,data:r.result});r.readAsDataURL(file)
 }))).then(uploaded=>{
-storage.homework.unshift({id:Date.now(),date,class:cls,chapter,task,link,files:uploaded,new:true});
+storage.homework.unshift({id:Date.now(),date,class:cls,chapter,task,link,files:[...files].map(f=>URL.createObjectURL(f))});
 document.getElementById('hwChapter').value='';document.getElementById('hwTask').value='';document.getElementById('hwLink').value='';document.getElementById('hwFiles').value='';previewFiles=[];
 renderUploadPreview();save();renderHomework();renderHomeHW();toast('होमवर्क जोड़ा गया')
 })
