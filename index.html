@@ -1172,7 +1172,20 @@ function renderHomeHW(){
 const e=document.getElementById('homeHW');if(!e)return;
 const d=storage.homework.slice().sort((a,b)=>b.id-a.id).slice(0,4);
 e.innerHTML=d.length?`<div class="table-wrap"><table class="table"><thead><tr><th>तिथि</th><th>कक्षा</th><th>अध्याय</th><th>टास्क</th><th>लिंक</th></tr></thead><tbody>${
-d.map(h=>`<tr><td>${h.date}</td><td>${h.class}</td><td>${h.chapter}</td><td>${h.task}</td><td>${h.link?`<a class="href-link" href="${h.link}" target="_blank">Drive</a>`:'-'}</td></tr>`).join('')
+d.map(h=>`<tr><td>${h.date}</td><td>${h.class}</td><td>${h.chapter}</td><td>${h.task}</td><td>
+${h.link ? `
+<a href="${h.link}" target="_blank" class="href-link">📄 Drive</a>
+
+<br><br>
+
+<iframe
+src="${h.link.replace('/view?usp=drive_link','/preview')}"
+width="220"
+height="260"
+style="border:none;border-radius:12px;">
+</iframe>
+` : '-'}
+</td></tr>`).join('')
 }</tbody></table></div>`:'<div class="empty"><div class="ico">📝</div><p>अभी कोई homework नहीं है</p></div>';
 updateStats()
 }
