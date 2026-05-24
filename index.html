@@ -1164,7 +1164,13 @@ return rel.length?rel.map(h=>`<div class="announcement" style="margin-bottom:10p
 
 function renderHomework(){
 const b=document.getElementById('hwBody');if(!b)return;
-b.innerHTML=storage.homework.length?storage.homework.slice().sort((a,b)=>b.id-a.id).map(h=>`<tr><td>${h.date}</td><td><span class="badge-mini ${h.class.includes('9')?'b9':'b10'}">${h.class}</span></td><td>${h.chapter}</td><td>${h.task}</td><td>${h.link?`<a class="href-link" href="${h.link}" target="_blank">Drive</a>`:'-'}</td><td><span class="badge-mini ${h.new?'bnew':'b9'}">${h.new?'नया':'देखा गया'}</span></td></tr>`).join(''):'<tr><td colspan="6"><div class="empty"><div class="ico">📝</div><p>अभी कोई homework नहीं है</p></div></td></tr>';
+b.innerHTML=storage.homework.length?storage.homework.slice().sort((a,b)=>b.id-a.id).map(h=>`<tr><td>${h.date}</td><td><span class="badge-mini ${h.class.includes('9')?'b9':'b10'}">${h.class}</span></td><td>${h.chapter}</td><td>${h.task}</td><td>
+${h.link ? `
+<a href="${h.link}" target="_blank" class="btn btn-primary btn-sm">
+📘 PDF खोलें
+</a>
+` : '-'}
+</td><td><span class="badge-mini ${h.new?'bnew':'b9'}">${h.new?'नया':'देखा गया'}</span></td></tr>`).join(''):'<tr><td colspan="6"><div class="empty"><div class="ico">📝</div><p>अभी कोई homework नहीं है</p></div></td></tr>';
 updateStats()
 }
 
